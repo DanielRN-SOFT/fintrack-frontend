@@ -1,13 +1,16 @@
-
+import { Routes, Route } from "react-router-dom";
+import AuthLayout from "./layout/AuthLayout";
+import Login from "./pages/Login";
 function App() {
-
   return (
     <>
-    <div>
-      <h1 className="text-2xl text-indigo-700 font-extrabold">Hello world</h1>
-    </div>
+      <Routes>
+        <Route path="/" element={<AuthLayout />}>
+          <Route index element={<Login/>}></Route>
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
