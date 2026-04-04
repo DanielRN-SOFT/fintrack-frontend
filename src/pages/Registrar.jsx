@@ -1,11 +1,11 @@
 import LabelAuth from "../components/Auth/LabelAuth";
 import InputAuth from "../components/Auth/InputAuth";
-import { Link } from "react-router-dom";
 import HeadingAuth from "../components/Auth/HeadingAuth";
 import ButtonAuth from "../components/Auth/ButtonAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Registrar = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +34,19 @@ const Registrar = () => {
         {/* <!-- Login Form --> */}
         <form className="space-y-6">
           <div>
-            <LabelAuth contenido={"Correo Electronico"} />
+            <LabelAuth contenido={"Nombre"} id={"nombre"} />
+            <div className="relative group">
+              <GroupFormAuth logo={"account_circle"} />
+              <InputAuth
+                id="nombre"
+                name="nombre"
+                placeholder="Daniel Felipe Ramirez Navarro"
+                type="text"
+              />
+            </div>
+          </div>
+          <div>
+            <LabelAuth contenido={"Correo Electronico"} id={"email"} />
             <div className="relative group">
               <GroupFormAuth logo={"mail"} />
               <InputAuth
@@ -47,13 +59,7 @@ const Registrar = () => {
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <LabelAuth contenido={"Contraseña"} />
-              <Link
-                className="text-xs font-semibold text-on-tertiary-container hover:underline"
-                to="/forgot-password"
-              >
-                ¿Olvidaste tu contraseña?
-              </Link>
+              <LabelAuth contenido={"Contraseña"} id={"password"} />
             </div>
             <div className="relative group">
               <GroupFormAuth logo={"lock"} />

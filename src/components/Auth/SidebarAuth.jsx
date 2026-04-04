@@ -1,4 +1,22 @@
+import { useLocation } from "react-router-dom";
+
 const SideBarAuth = () => {
+  const textos = {
+    "/": [
+      "Controla tu dinero. Toma el control de tu futuro.",
+      "La plataforma editorial para la gestión de tus activos más importantes. Simple, potente y privada.",
+    ],
+    "/sign-up": [
+      "Crea tu cuenta en segundos.",
+      "Menos complicaciones, más control sobre tu dinero.",
+    ],
+    "/forgot-password": [
+      "Recupera el acceso a tu cuenta de forma segura.",
+      "Te ayudamos a volver en segundos.",
+    ],
+  };
+
+  const { pathname } = useLocation();
   return (
     <aside className="hidden md:flex md:w-[40%] bg-primary-container flex-col justify-center p-12 fixed left-0 top-0 bottom-0 z-50 overflow-hidden min-h-dvh items-center">
       <div className="absolute inset-0 geometric-pattern pointer-events-none opacity-50"></div>
@@ -19,11 +37,10 @@ const SideBarAuth = () => {
         </div>
         <div className="space-y-6 max-w-sm">
           <h2 className="text-4xl font-extrabold text-white leading-tight font-headline">
-            Controla tu dinero. Toma el control de tu futuro.
+            {textos[pathname][0] || "sin titulo"} 
           </h2>
           <p className="text-slate-300 text-lg leading-relaxed">
-            La plataforma editorial para la gestión de tus activos más
-            importantes. Simple, potente y privada.
+            {textos[pathname][1] || "sin parrafo"}
           </p>
         </div>
       </div>

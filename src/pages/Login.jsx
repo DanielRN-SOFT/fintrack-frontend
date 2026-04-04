@@ -33,7 +33,7 @@ const Login = () => {
         {/* <!-- Login Form --> */}
         <form className="space-y-6">
           <div>
-            <LabelAuth contenido={"Correo Electronico"} />
+            <LabelAuth contenido={"Correo Electronico"} id={"email"} />
             <div className="relative group">
               <GroupFormAuth logo={"mail"} />
               <InputAuth
@@ -46,7 +46,7 @@ const Login = () => {
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <LabelAuth contenido={"Contraseña"} />
+              <LabelAuth contenido={"Contraseña"} id={"password"} />
               <Link
                 className="text-xs font-semibold text-on-tertiary-container hover:underline"
                 to="/forgot-password"
