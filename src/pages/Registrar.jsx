@@ -1,31 +1,32 @@
 import LabelAuth from "../components/Auth/LabelAuth";
 import InputAuth from "../components/Auth/InputAuth";
+import { Link } from "react-router-dom";
 import HeadingAuth from "../components/Auth/HeadingAuth";
 import ButtonAuth from "../components/Auth/ButtonAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-const Login = () => {
+
+const Registrar = () => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
       <div className="w-full max-w-md mt-20">
         {/* <!-- Heading --> */}
         <HeadingAuth
-          titulo={"Bienvenido de nuevo"}
-          mensaje={"Ingresa tus credenciales para acceder a tu cuenta"}
+          titulo={"¿Nuevo por aquí?"}
+          mensaje={"Registrate para acceder a nuestro sistema"}
         />
 
         {/* <!-- Form Toggle --> */}
         <div className="inline-flex p-1 bg-surface-container-low rounded-xl mb-8 w-full">
           <ButtonAuth
-            className="transition-all bg-[#14B86A] text-white shadow-sm"
+            className="text-on-surface-variant hover:text-primary transition-all"
             mensaje={"Iniciar sesión"}
             url={"/"}
           />
           <ButtonAuth
-            className="text-on-surface-variant hover:text-primary transition-all"
+            className="transition-all bg-[#14B86A] text-white shadow-sm"
             mensaje={"Registrarse"}
             url={"/sign-up"}
           />
@@ -82,18 +83,18 @@ const Login = () => {
             className="w-full py-4 px-6 cursor-pointer bg-[#14B86A] text-white rounded-lg font-bold text-lg hover:bg-[#14B86A]/90 transition-all transform hover:scale-[1.01] active:scale-[0.98] shadow-lg shadow-[#14B86A]/20"
             type="submit"
           >
-            Iniciar sesión
+            Crear cuenta
           </button>
         </form>
         {/* <!-- Footer Link --> */}
         <FooterAuth
-          mensaje={"¿No tienes cuenta?"}
-          link={"Regístrate"}
-          url={"/sign-up"}
+          mensaje={"¿Ya tienes una cuenta?"}
+          link={"Iniciar sesión"}
+          url={"/"}
         />
       </div>
     </>
   );
 };
 
-export default Login;
+export default Registrar;
