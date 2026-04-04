@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { matchPath, useLocation } from "react-router-dom";
 
 const SideBarAuth = () => {
   const textos = {
@@ -14,9 +14,16 @@ const SideBarAuth = () => {
       "Recupera el acceso a tu cuenta de forma segura.",
       "Te ayudamos a volver en segundos.",
     ],
+    "/change-password": [
+      "Estás a un paso de volver.",
+      "Crea una nueva contraseña y recupera el control.",
+    ],
   };
 
-  const { pathname } = useLocation();
+  let { pathname } = useLocation();
+  const isForgot = matchPath("/change-password/:token", pathname);
+  isForgot ? (pathname = "/change-password") : (pathname = pathname);
+
   return (
     <aside className="hidden md:flex md:w-[40%] bg-primary-container flex-col justify-center p-12 fixed left-0 top-0 bottom-0 z-50 overflow-hidden min-h-dvh items-center">
       <div className="absolute inset-0 geometric-pattern pointer-events-none opacity-50"></div>
@@ -37,7 +44,7 @@ const SideBarAuth = () => {
         </div>
         <div className="space-y-6 max-w-sm">
           <h2 className="text-4xl font-extrabold text-white leading-tight font-headline">
-            {textos[pathname][0] || "sin titulo"} 
+            {textos[pathname][0] || "sin titulo"}
           </h2>
           <p className="text-slate-300 text-lg leading-relaxed">
             {textos[pathname][1] || "sin parrafo"}

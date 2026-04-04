@@ -3,32 +3,52 @@ import InputAuth from "../components/Auth/InputAuth";
 import HeadingAuth from "../components/Auth/HeadingAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
+import { useState } from "react";
 
-const ForgotPassword = () => {
+const NuevoPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  
   return (
     <>
       <div className="w-full max-w-md mt-20">
         {/* <!-- Heading --> */}
         <HeadingAuth
-          titulo={"¿Sin acceso?"}
-          mensaje={"No pierdas tú informacion y recupera tú contraseña"}
+          titulo={"¿Una nueva oportunidad?"}
+          mensaje={
+            "Ingresa una nueva contraseña y maneja tus finanzas de nuevo"
+          }
         />
-
 
         {/* <!-- Login Form --> */}
         <form className="space-y-6">
           <div>
-            <LabelAuth contenido={"Correo Electronico"} id={"email"} />
+            <div className="flex items-center justify-between mb-2">
+              <LabelAuth contenido={"Nueva contraseña"} id={"password"} />
+            </div>
             <div className="relative group">
-              <GroupFormAuth logo={"mail"} />
+              <GroupFormAuth logo={"lock"} />
+
               <InputAuth
-                id="email"
-                name="email"
-                placeholder="ejemplo@fintrack.com"
-                type="email"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                type={showPassword ? "text" : "password"}
               />
+              <button
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-primary transition-colors cursor-pointer"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <span
+                  className="material-symbols-outlined"
+                  data-icon="visibility"
+                >
+                  visibility
+                </span>
+              </button>
             </div>
           </div>
+
           <div></div>
 
           <button
@@ -49,4 +69,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default NuevoPassword;
