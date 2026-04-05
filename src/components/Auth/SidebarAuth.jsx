@@ -29,7 +29,7 @@ const SideBarAuth = () => {
       <div className="absolute inset-0 geometric-pattern pointer-events-none opacity-50"></div>
       <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="relative z-10">
-        <div className="flex items-center gap-3 mb-12">
+        <div className="flex items-center gap-3 mb-5">
           <div className="bg-gray-100 rounded-lg p-2 flex items-center justify-center">
             <span
               className="material-symbols-outlined text-primary text-2xl"

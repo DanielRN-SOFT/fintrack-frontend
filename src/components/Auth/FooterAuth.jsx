@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const FooterAuth = ({ mensaje, link, url }) => {
   return (
     <>
-      <div className="mt-8 text-center">
+      <div className="mt-4 text-center">
         <p className="text-on-surface-variant text-sm">
           {mensaje}
           <Link

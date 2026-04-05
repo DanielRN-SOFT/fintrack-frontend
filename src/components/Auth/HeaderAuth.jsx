@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HeaderAuth = () => {
   return (
-    <header className="absolute top-0 right-0 w-full flex justify-between items-center px-6 sm:px-10 md:px-12 py-6 md:py-8 z-20">
+    <header className="absolute top-0 right-0 w-full flex justify-between items-center px-6 sm:px-10 md:px-12 py-2 z-20">
       {/* Logo */}
       <Link to="/" className="flex items-center gap-1">
         <img
