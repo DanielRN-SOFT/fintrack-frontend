@@ -20,9 +20,10 @@ const Alerta = ({ alerta, onClose }) => {
   const isError = alerta.error;
 
   return (
+    
     <div
       role="alert"
-      className={`flex items-start gap-3 rounded-[10px] border-l-4 px-4 py-3 text-sm transition-all duration-300
+      className={`flex gap-3 justify-center items-center rounded-[10px] border-l-4 px-4 py-3 text-sm transition-all duration-300
         ${
           isError ? "bg-red-50 border-red-500" : "bg-green-50 border-[#14B86A]"
         }`}
@@ -37,7 +38,7 @@ const Alerta = ({ alerta, onClose }) => {
 
       {/* Mensaje */}
       <p
-        className={`flex-1 font-medium
+        className={`flex-1 font-medium flex justify-center items-center
           ${isError ? "text-red-800" : "text-[#0a6e40]"}`}
       >
         {alerta.msg}

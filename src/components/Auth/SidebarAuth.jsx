@@ -18,11 +18,17 @@ const SideBarAuth = () => {
       "Estás a un paso de volver.",
       "Crea una nueva contraseña y recupera el control.",
     ],
+    "/confirmar": [
+      "Estamos verificando el estado de tu cuenta.",
+      "Este proceso confirma tu acceso y asegura que todo esté listo para que puedas continuar.",
+    ],
   };
 
   let { pathname } = useLocation();
   const isForgot = matchPath("/change-password/:token", pathname);
   isForgot ? (pathname = "/change-password") : (pathname = pathname);
+  const isConfirmed = matchPath("/confirmar/:token", pathname);
+  isConfirmed ? (pathname = "/confirmar") : (pathname = pathname)
 
   return (
     <aside className="hidden md:flex md:w-[40%] bg-primary-container flex-col justify-center p-12 fixed left-0 top-0 bottom-0 z-50 overflow-hidden min-h-dvh items-center">
