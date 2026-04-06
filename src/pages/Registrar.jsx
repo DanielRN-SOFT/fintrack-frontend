@@ -9,8 +9,14 @@ import Alerta from "../components/alerta";
 import { useState } from "react";
 
 const Registrar = () => {
+  // Datos del formulario
   const [formulario, setFormulario] = useState({});
+
+  // Hook para mostrar o ocultar el input de contrasñea
   const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  // Datos del componente de la alerta
   const [alerta, setAlerta] = useState({});
 
   // Obtener el formdata y modificarlo para una estructura json deseada
@@ -18,6 +24,7 @@ const Registrar = () => {
     const formData = new FormData(formulario);
     const objetoDatos = {};
 
+    // Llenar el objeto de manera dinamica
     for (const [name, value] of formData) {
       objetoDatos[name] = value;
     }
@@ -28,10 +35,14 @@ const Registrar = () => {
   // Evento para guardar la informacion a la hora de enviar el formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Transformar la informacion
     const datos = serializarFormulario(e.target);
+
+    //  d qmgiq4 3l
     setFormulario(datos);
 
-    if (Object.entries(datos).some((obj) => obj.includes(""))) {
+    if (Object.entries(formulario).some((obj) => obj.includes(""))) {
       setAlerta({
         msg: "Todos los campos son obligatorios",
         error: true,
@@ -40,7 +51,7 @@ const Registrar = () => {
       return;
     }
 
-    if (datos.password !== datos.repetirPassword) {
+    if (formulario.password !== formulario.repetirPassword) {
       setAlerta({
         msg: "Las contraseñas no coinciden entre si",
         error: true,
@@ -187,13 +198,13 @@ const Registrar = () => {
                 id="repetirPassword"
                 name="repetirPassword"
                 placeholder="••••••••"
-                type={showPassword ? "text" : "password"}
+                type={showRepeatPassword ? "text" : "password"}
                 fn={handleChange}
               />
               <button
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-primary transition-colors cursor-pointer"
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowRepeatPassword(!showRepeatPassword)}
               >
                 <span
                   className="material-symbols-outlined"
