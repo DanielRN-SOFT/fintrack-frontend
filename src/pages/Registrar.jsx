@@ -5,7 +5,7 @@ import ButtonAuth from "../components/Auth/ButtonAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
 import clienteFetch from "../../config/clienteFetch";
-import Alerta from "../components/alerta";
+import Alerta from "../components/Alerta";
 import { useState } from "react";
 
 const Registrar = () => {

@@ -4,10 +4,59 @@ import HeadingAuth from "../components/Auth/HeadingAuth";
 import ButtonAuth from "../components/Auth/ButtonAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
-import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Alerta from "../components/Alerta";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import clienteFetch from "../../config/clienteFetch";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [alerta, setAlerta] = useState({});
+
+  const { setAuth } = useAuth();
+
+  // Redirreccionamiento de pagina
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if ([email.trim(), password.trim()].includes("")) {
+      setAlerta({
+        msg: "Todos los campos son obligatorios",
+        error: true,
+      });
+      return;
+    }
+
+    try {
+      const request = await clienteFetch("/auth/autenticar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const response = await request.json();
+
+      response.token ? setAuth(response) : setAuth({});
+      response.token
+        ? localStorage.setItem("token", response.token)
+        : setAlerta({
+            msg: response.msg,
+            error: true,
+          });
+      response.token ? navigate("/dashboard") : "";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { msg } = alerta;
+
   return (
     <>
       <div className="w-full max-w-md mt-20">
@@ -31,7 +80,7 @@ const Login = () => {
           />
         </div>
         {/* <!-- Login Form --> */}
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <LabelAuth contenido={"Correo Electronico"} id={"email"} />
             <div className="relative group">
@@ -41,6 +90,8 @@ const Login = () => {
                 name="email"
                 placeholder="ejemplo@fintrack.com"
                 type="email"
+                value={email}
+                fn={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
@@ -62,7 +113,12 @@ const Login = () => {
                 name="password"
                 placeholder="••••••••"
                 type={showPassword ? "text" : "password"}
+                value={password}
+                fn={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
+
               <button
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-primary transition-colors cursor-pointer"
                 type="button"
@@ -78,6 +134,7 @@ const Login = () => {
             </div>
           </div>
 
+          {msg && <Alerta alerta={alerta} />}
           <button
             className="w-full py-4 px-6 cursor-pointer bg-[#14B86A] text-white rounded-lg font-bold text-lg hover:bg-[#14B86A]/90 transition-all transform hover:scale-[1.01] active:scale-[0.98] shadow-lg shadow-[#14B86A]/20"
             type="submit"
