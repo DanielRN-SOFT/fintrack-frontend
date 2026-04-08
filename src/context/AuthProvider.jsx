@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
       }
 
       try {
-        const request = await clienteFetch("/auth/perfil", config);
+        const request = await clienteFetch("/auth/perfil", config(token));
         const response = await request.json();
         setAuth(response);
       } catch (error) {
@@ -72,7 +72,10 @@ const AuthProvider = ({ children }) => {
       const request = await clienteFetch("/usuario/actualizar-password", {
         method: "PUT",
         body: JSON.stringify(datos),
-        config,
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const response = await request.json();
@@ -100,5 +103,5 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export {AuthProvider};
+export { AuthProvider };
 export default AuthContext;

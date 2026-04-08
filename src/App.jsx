@@ -6,6 +6,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import NuevoPassword from "./pages/NuevoPassword";
 import ConfirmarCuenta from "./pages/ConfirmarCuenta";
 import { AuthProvider } from "./context/AuthProvider";
+import PrivadoLayout from "./layout/PrivadoLayout";
+import Dashboard from "./pages/Dashboard";
 function App() {
   return (
     <>
@@ -23,6 +25,9 @@ function App() {
               path="confirmar/:token"
               element={<ConfirmarCuenta />}
             ></Route>
+          </Route>
+          <Route path="/dashboard" element={<PrivadoLayout />}>
+            <Route index element={<Dashboard />}></Route>
           </Route>
         </Routes>
       </AuthProvider>
