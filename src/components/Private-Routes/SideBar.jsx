@@ -1,63 +1,115 @@
-const SideBar = () => {
-  return (
-    <aside className="flex flex-col h-screen fixed left-0 top-0 border-r border-white/10 bg-[#002D5E] dark:bg-slate-950 w-64 z-50">
-      <div className="text-2xl font-black text-white px-6 py-8 font-headline tracking-tight">
-        FinTrack
-        <span className="block text-xs font-medium text-on-primary-container tracking-widest opacity-80 uppercase mt-1">
-          Premium Ledger
-        </span>
-      </div>
-      <nav className="flex-1 px-3 space-y-1 overflow-y-auto no-scrollbar">
-        <a
-          className="flex items-center bg-slate-800/50 text-white border-l-4 border-[#14B86A] rounded-r-lg ml-0 py-3 px-6 group"
-          href="#"
-        >
-          <span className="material-symbols-outlined mr-4">dashboard</span>
-          <span className="font-headline font-semibold tracking-tight">
-            Dashboard
-          </span>
-        </a>
+import { useState, useEffect } from "react";
 
-        <a
-          className="flex items-center text-slate-300 hover:text-white py-3 px-6 transition-colors hover:bg-white/10 rounded-lg group"
-          href="#"
+const SideBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        isOpen &&
+        !e.target.closest("aside") &&
+        !e.target.closest("#menu-toggle")
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  return (
+    <>
+      {/* Botón hamburguesa — solo visible cuando el sidebar está CERRADO */}
+      {!isOpen && (
+        <button
+          id="menu-toggle"
+          onClick={() => setIsOpen(true)}
+          className="lg:hidden fixed top-4 left-4 z-60 w-10 h-10 bg-[#14B86A] rounded-lg flex items-center justify-center text-white shadow-lg"
+          aria-label="Abrir menú"
         >
-          <span className="material-symbols-outlined mr-4">dashboard</span>
-          <span className="font-headline font-semibold tracking-tight">
+          <span className="material-symbols-outlined text-xl">menu</span>
+        </button>
+      )}
+
+      {/* Overlay oscuro */}
+      {isOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed left-0 top-0 h-full w-65 bg-[#002D5E] dark:bg-[#001939] flex flex-col py-6 px-4 z-50 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Header con logo y botón cerrar */}
+        <div className="mb-10 px-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                <span className="material-symbols-outlined text-white">
+                  account_balance
+                </span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-white tracking-tight font-headline">
+                  FinTrack
+                </h1>
+                <p className="text-[10px] text-slate-400 uppercase tracking-widest font-medium">
+                  The Architectural Ledger
+                </p>
+              </div>
+            </div>
+
+            {/* Botón cerrar — solo visible en móvil/tablet dentro del sidebar */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="lg:hidden w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+              aria-label="Cerrar menú"
+            >
+              <span className="material-symbols-outlined text-lg">close</span>
+            </button>
+          </div>
+        </div>
+
+        <nav className="flex-1 space-y-2">
+          <a
+            className="flex items-center gap-3 bg-[#f1f3ff]/10 text-white rounded-lg px-4 py-3 border-l-4 border-[#14B86A] transition-all font-medium text-sm tracking-tight"
+            href="#"
+          >
+            <span className="material-symbols-outlined">dashboard</span>
+            Dashboard
+          </a>
+
+          <a
+            className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
+            href="#"
+          >
+            <span className="material-symbols-outlined">receipt_long</span>
             Transacciones
-          </span>
-        </a>
-        <a
-          className="flex items-center text-slate-300 hover:text-white py-3 px-6 transition-colors hover:bg-white/10 rounded-lg group"
-          href="#"
-        >
-          <span className="material-symbols-outlined mr-4">trending_up</span>
-          <span className="font-headline font-semibold tracking-tight">
-            Inversiones
-          </span>
-        </a>
-        <a
-          className="flex items-center text-slate-300 hover:text-white py-3 px-6 transition-colors hover:bg-white/10 rounded-lg group"
-          href="#"
-        >
-          <span className="material-symbols-outlined mr-4">
-            account_balance_wallet
-          </span>
-          <span className="font-headline font-semibold tracking-tight">
-            Presupuesto
-          </span>
-        </a>
-        <a
-          className="flex items-center text-slate-300 hover:text-white py-3 px-6 transition-colors hover:bg-white/10 rounded-lg group"
-          href="#"
-        >
-          <span className="material-symbols-outlined mr-4">settings</span>
-          <span className="font-headline font-semibold tracking-tight">
+          </a>
+
+          <a
+            className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
+            href="#"
+          >
+            <span className="material-symbols-outlined">bar_chart</span>
+            Reportes
+          </a>
+
+          <a
+            className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
+            href="#"
+          >
+            <span className="material-symbols-outlined">settings</span>
             Configuración
-          </span>
-        </a>
-      </nav>
-    </aside>
+          </a>
+        </nav>
+      </aside>
+    </>
   );
 };
 

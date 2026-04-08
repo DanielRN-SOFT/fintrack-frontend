@@ -13,7 +13,7 @@ const PrivadoLayout = () => {
     <>
       <SideBar />
       <NavBar/>
-      <main>{auth.id ? <Outlet /> : <Navigate to="/" />}</main>
+    {auth.id ? <Outlet /> : <Navigate to="/" />}
     </>
   );
 };
