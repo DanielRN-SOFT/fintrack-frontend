@@ -5,15 +5,13 @@ import NavBar from "../components/Private-Routes/NavBar";
 const PrivadoLayout = () => {
   const { auth, cargando } = useAuth();
 
-  console.log(auth);
-  console.log(cargando);
   if (cargando) return "cargando...";
 
   return (
     <>
       <SideBar />
-      <NavBar/>
-    {auth.id ? <Outlet /> : <Navigate to="/" />}
+      <NavBar />
+      {auth.id ? <Outlet /> : <Navigate to="/" />}
     </>
   );
 };

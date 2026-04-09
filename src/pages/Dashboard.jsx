@@ -3,19 +3,31 @@ import { useState, useEffect } from "react";
 import clienteFetch from "../../config/clienteFetch";
 import config from "../../config/authorization";
 import formatearDinero from "../../config/formatearDinero";
-
+import PieChart from "../components/Charts/PieChart";
+import FinancialChart from "../components/Charts/FinacialChart";
+import BarComparativa from "../components/Charts/BarComparativa";
 
 const Dashboard = () => {
+  const [cargando, setCargando] = useState(true);
   const [resumenAnual, setResumenAnual] = useState({});
+  const [resumenMensual, setResumenMensual] = useState({});
+  const [balanceMensual, setBalanceMensual] = useState({});
+  const [gastosPorCategoria, setGastosPorCategoria] = useState({});
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const obtenerResumenAnual = async () => {
+    const obtenerEstadisticas = async () => {
       const request = await clienteFetch("/dashboard", config(token));
       const response = await request.json();
       setResumenAnual(response.resumenAnual);
+      setGastosPorCategoria(response.gastosPorCategoria);
+
+      setResumenMensual(response.resumenMensual);
+      setBalanceMensual(response.balanceMensual);
+      console.log(response.balanceMensual);
+      setCargando(false);
     };
-    obtenerResumenAnual();
+    obtenerEstadisticas();
   }, []);
 
   return (
@@ -65,234 +77,56 @@ const Dashboard = () => {
         <section className="grid grid-cols-1 lg:grid-cols-10 gap-6 md:gap-8">
           {/* <!-- Area Chart Placeholder (60%) --> */}
           <div className="lg:col-span-6 bg-surface-container-lowest p-8 rounded-xl shadow-[0_24px_48px_-12px_rgba(0,25,57,0.04)] border border-outline-variant/10">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6">
               <h4 className="font-headline font-bold text-lg text-primary">
                 Evolución de Flujo de Efectivo
               </h4>
-              <div className="flex gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-secondary"></span>
-                  <span className="text-xs text-on-surface-variant font-medium">
-                    Ingresos
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-error"></span>
-                  <span className="text-xs text-on-surface-variant font-medium">
-                    Egresos
-                  </span>
-                </div>
-              </div>
             </div>
-            {/* <!-- Chart Graphic Emulation --> */}
-            <div className="h-64 flex items-end gap-1 relative">
-              {/* <!-- Horizontal Grid Lines --> */}
-              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-5">
-                <div className="border-b border-on-surface"></div>
-                <div className="border-b border-on-surface"></div>
-                <div className="border-b border-on-surface"></div>
-                <div className="border-b border-on-surface"></div>
-              </div>
-              {/* <!-- Mock Wave Shape --> */}
-              <div className="w-full h-full bg-linear-to-t from-secondary/5 to-transparent absolute bottom-0"></div>
-              <svg
-                className="absolute bottom-0 left-0 w-full h-full overflow-visible"
-                preserveAspectRatio="none"
-                viewBox="0 0 100 100"
-              >
-                <path
-                  d="M0,80 Q10,75 20,60 T40,40 T60,55 T80,30 T100,20"
-                  fill="none"
-                  stroke="#14B86A"
-                  strokeWidth="2"
-                  vectorEffect="non-scaling-stroke"
-                ></path>
-                <path
-                  d="M0,90 Q10,85 20,80 T40,75 T60,82 T80,70 T100,65"
-                  fill="none"
-                  stroke="#ba1a1a"
-                  strokeWidth="2"
-                  vectorEffect="non-scaling-stroke"
-                ></path>
-              </svg>
-              <div className="w-full flex justify-between pt-4 absolute -bottom-8">
-                <span className="text-[10px] text-on-surface-variant font-bold">
-                  NOV
-                </span>
-                <span className="text-[10px] text-on-surface-variant font-bold">
-                  DIC
-                </span>
-                <span className="text-[10px] text-on-surface-variant font-bold">
-                  ENE
-                </span>
-                <span className="text-[10px] text-on-surface-variant font-bold">
-                  FEB
-                </span>
-                <span className="text-[10px] text-on-surface-variant font-bold">
-                  MAR
-                </span>
-                <span className="text-[10px] text-on-surface-variant font-bold">
-                  ABR
-                </span>
-              </div>
+
+            {/* IMPORTANTE: altura fija */}
+            <div className="h-80">
+              {!cargando && (
+                <FinancialChart
+                  labels={resumenMensual.labels}
+                  ingresos={resumenMensual.datasets[0].data}
+                  egresos={resumenMensual.datasets[1].data}
+                  balance={balanceMensual.datasets[0].data}
+                />
+              )}
             </div>
           </div>
           {/* <!-- Donut Chart Placeholder (40%) --> */}
-          <div className="lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-[0_24px_48px_-12px_rgba(0,25,57,0.04)] border border-outline-variant/10 flex flex-col">
-            <h4 className="font-headline font-bold text-lg text-primary mb-8">
-              Distribución de Egresos
-            </h4>
-            <div className="flex-1 flex flex-col items-center justify-center gap-8">
-              <div className="relative w-48 h-48">
-                <svg className="w-full h-full" viewBox="0 0 36 36">
-                  <circle
-                    cx="18"
-                    cy="18"
-                    fill="transparent"
-                    r="15.915"
-                    stroke="#dde2f3"
-                    strokeWidth="4"
-                  ></circle>
-                  <circle
-                    cx="18"
-                    cy="18"
-                    fill="transparent"
-                    r="15.915"
-                    stroke="#002d5e"
-                    strokeDasharray="40 60"
-                    strokeDashoffset="25"
-                    strokeWidth="4"
-                  ></circle>
-                  <circle
-                    cx="18"
-                    cy="18"
-                    fill="transparent"
-                    r="15.915"
-                    stroke="#14B86A"
-                    strokeDasharray="25 75"
-                    strokeDashoffset="85"
-                    strokeWidth="4"
-                  ></circle>
-                  <circle
-                    cx="18"
-                    cy="18"
-                    fill="transparent"
-                    r="15.915"
-                    stroke="#008080"
-                    strokeDasharray="20 80"
-                    strokeDashoffset="110"
-                    strokeWidth="4"
-                  ></circle>
-                  <circle
-                    cx="18"
-                    cy="18"
-                    fill="transparent"
-                    r="15.915"
-                    stroke="#ba1a1a"
-                    strokeDasharray="15 85"
-                    strokeDashoffset="125"
-                    strokeWidth="4"
-                  ></circle>
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-xs text-on-surface-variant font-bold uppercase">
-                    Total
-                  </span>
-                  <span className="text-xl font-extrabold text-primary">
-                    $2.3M
-                  </span>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-3 w-full px-4">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary-container"></span>
-                  <span className="text-xs font-medium text-on-surface">
-                    Alimentación
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-secondary"></span>
-                  <span className="text-xs font-medium text-on-surface">
-                    Transporte
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-tertiary-container"></span>
-                  <span className="text-xs font-medium text-on-surface">
-                    Servicios
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-error"></span>
-                  <span className="text-xs font-medium text-on-surface">
-                    Otros
-                  </span>
-                </div>
+          {!cargando && (
+            <div className="lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-[0_24px_48px_-12px_rgba(0,25,57,0.04)] border border-outline-variant/10">
+              <h4 className="font-headline font-bold text-lg text-primary mb-8 text-center">
+                Gastos por categoría
+              </h4>
+
+              <div className="w-full h-64 md:h-80 lg:h-72">
+                <PieChart
+                  labels={gastosPorCategoria.labels}
+                  datasets={gastosPorCategoria.datasets}
+                />
               </div>
             </div>
-          </div>
+          )}
         </section>
         {/* <!-- Bottom Section --> */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* <!-- Grouped Bar Chart --> */}
           <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0_24px_48px_-12px_rgba(0,25,57,0.04)] border border-outline-variant/10">
-            <h4 className="font-headline font-bold text-lg text-primary mb-8">
+            <h4 className="font-headline font-bold text-lg text-primary mb-6">
               Comparativa Mensual
             </h4>
-            <div className="h-64 flex items-end justify-between gap-4 px-4">
-              {/* <!-- Bar Groups --> */}
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex items-end gap-1 h-48 w-full justify-center">
-                  <div className="bg-primary-container/20 w-4 h-[60%] rounded-t-sm"></div>
-                  <div className="bg-secondary/40 w-4 h-[40%] rounded-t-sm"></div>
-                </div>
-                <span className="text-[10px] font-bold text-on-surface-variant">
-                  NOV
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex items-end gap-1 h-48 w-full justify-center">
-                  <div className="bg-primary-container/20 w-4 h-[80%] rounded-t-sm"></div>
-                  <div className="bg-secondary/40 w-4 h-[50%] rounded-t-sm"></div>
-                </div>
-                <span className="text-[10px] font-bold text-on-surface-variant">
-                  DIC
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex items-end gap-1 h-48 w-full justify-center">
-                  <div className="bg-primary-container/20 w-4 h-[70%] rounded-t-sm"></div>
-                  <div className="bg-secondary/40 w-4 h-[45%] rounded-t-sm"></div>
-                </div>
-                <span className="text-[10px] font-bold text-on-surface-variant">
-                  ENE
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex items-end gap-1 h-48 w-full justify-center">
-                  <div className="bg-primary-container/20 w-4 h-[90%] rounded-t-sm"></div>
-                  <div className="bg-secondary/40 w-4 h-[55%] rounded-t-sm"></div>
-                </div>
-                <span className="text-[10px] font-bold text-on-surface-variant">
-                  FEB
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex items-end gap-1 h-48 w-full justify-center">
-                  <div className="bg-primary-container/20 w-4 h-[75%] rounded-t-sm"></div>
-                  <div className="bg-secondary/40 w-4 h-[60%] rounded-t-sm"></div>
-                </div>
-                <span className="text-[10px] font-bold text-on-surface-variant">
-                  MAR
-                </span>
-              </div>
-              <div className="flex flex-col items-center gap-2 w-full">
-                <div className="flex items-end gap-1 h-48 w-full justify-center">
-                  <div className="bg-primary-container w-4 h-[95%] rounded-t-sm"></div>
-                  <div className="bg-secondary w-4 h-[48%] rounded-t-sm"></div>
-                </div>
-                <span className="text-[10px] font-bold text-primary">ABR</span>
-              </div>
+
+            <div className="h-72">
+              {!cargando && (
+                <BarComparativa
+                  labels={resumenMensual.labels}
+                  ingresos={resumenMensual.datasets[0].data}
+                  egresos={resumenMensual.datasets[1].data}
+                />
+              )}
             </div>
           </div>
           {/* <!-- Recent Transactions Table --> */}

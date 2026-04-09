@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { auth, cerrarSesion } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -60,8 +62,10 @@ const NavBar = () => {
         >
           {/* Nombre: oculto en móvil */}
           <div className="hidden sm:block text-right">
-            <p className="text-xs font-bold text-primary">Carlos Martínez</p>
-            <p className="text-[10px] text-on-surface-variant">Miembro Pro</p>
+            <p className="text-xs font-bold text-primary">{auth.nombre}</p>
+            <p className="text-[10px] text-on-surface-variant">
+              Administrador Fintrack
+            </p>
           </div>
 
           <button
@@ -89,7 +93,10 @@ const NavBar = () => {
               <div className="my-1 border-t border-slate-100 dark:border-slate-700" />
               <button
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-150 cursor-pointer"
-                onClick={() => setDropdownOpen(false)}
+                onClick={() => {
+                  setDropdownOpen(false);
+                  cerrarSesion();
+                }}
               >
                 <span className="material-symbols-outlined text-[18px]">
                   logout
