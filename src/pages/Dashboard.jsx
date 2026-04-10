@@ -6,6 +6,7 @@ import formatearDinero from "../../config/formatearDinero";
 import PieChart from "../components/Charts/PieChart";
 import FinancialChart from "../components/Charts/FinacialChart";
 import BarComparativa from "../components/Charts/BarComparativa";
+import FilaTabla from "../components/Dashboard/FilaTabla";
 
 const Dashboard = () => {
   const [cargando, setCargando] = useState(true);
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [resumenMensual, setResumenMensual] = useState({});
   const [balanceMensual, setBalanceMensual] = useState({});
   const [gastosPorCategoria, setGastosPorCategoria] = useState({});
+  const [ultimasTransacciones, setUltimasTransacciones] = useState([]);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -21,10 +23,10 @@ const Dashboard = () => {
       const response = await request.json();
       setResumenAnual(response.resumenAnual);
       setGastosPorCategoria(response.gastosPorCategoria);
-
       setResumenMensual(response.resumenMensual);
       setBalanceMensual(response.balanceMensual);
-      console.log(response.balanceMensual);
+      setUltimasTransacciones(response.ultimasTransacciones);
+
       setCargando(false);
     };
     obtenerEstadisticas();
@@ -151,145 +153,24 @@ const Dashboard = () => {
                 </thead>
                 <tbody className="divide-y divide-surface-container-low">
                   {/* <!-- Row 1 --> */}
-                  <tr className="hover:bg-surface-container-low transition-all duration-200">
-                    <td className="py-4 pr-4">
-                      <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
-                        <span className="material-symbols-outlined text-primary-container text-lg">
-                          shopping_cart
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-primary text-sm">
-                          Éxito Express
-                        </span>
-                        <span className="text-xs text-on-surface-variant">
-                          Alimentación
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-xs text-on-surface-variant font-medium">
-                      Hoy, 10:24 AM
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className="font-bold text-error text-sm">
-                        -$125.400
-                      </span>
-                    </td>
-                  </tr>
-                  {/* <!-- Row 2 --> */}
-                  <tr className="hover:bg-surface-container-low transition-all duration-200">
-                    <td className="py-4 pr-4">
-                      <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
-                        <span className="material-symbols-outlined text-primary-container text-lg">
-                          electric_bolt
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-primary text-sm">
-                          EPM - Energía
-                        </span>
-                        <span className="text-xs text-on-surface-variant">
-                          Servicios
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-xs text-on-surface-variant font-medium">
-                      Ayer, 03:15 PM
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className="font-bold text-error text-sm">
-                        -$342.000
-                      </span>
-                    </td>
-                  </tr>
-                  {/* <!-- Row 3 --> */}
-                  <tr className="hover:bg-surface-container-low transition-all duration-200">
-                    <td className="py-4 pr-4">
-                      <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
-                        <span className="material-symbols-outlined text-secondary text-lg">
-                          payments
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-primary text-sm">
-                          Nómina Abril
-                        </span>
-                        <span className="text-xs text-on-surface-variant">
-                          Ingresos
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-xs text-on-surface-variant font-medium">
-                      15 Abr 2026
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className="font-bold text-secondary text-sm">
-                        +$4.200.000
-                      </span>
-                    </td>
-                  </tr>
-                  {/* <!-- Row 4 --> */}
-                  <tr className="hover:bg-surface-container-low transition-all duration-200">
-                    <td className="py-4 pr-4">
-                      <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
-                        <span className="material-symbols-outlined text-primary-container text-lg">
-                          directions_car
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-primary text-sm">
-                          Shell Gasolinera
-                        </span>
-                        <span className="text-xs text-on-surface-variant">
-                          Transporte
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-xs text-on-surface-variant font-medium">
-                      14 Abr 2026
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className="font-bold text-error text-sm">
-                        -$185.000
-                      </span>
-                    </td>
-                  </tr>
-                  {/* <!-- Row 5 --> */}
-                  <tr className="hover:bg-surface-container-low transition-all duration-200">
-                    <td className="py-4 pr-4">
-                      <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center">
-                        <span className="material-symbols-outlined text-primary-container text-lg">
-                          movie
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-primary text-sm">
-                          Netflix Suscripción
-                        </span>
-                        <span className="text-xs text-on-surface-variant">
-                          Entretenimiento
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 text-xs text-on-surface-variant font-medium">
-                      12 Abr 2026
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className="font-bold text-error text-sm">
-                        -$48.900
-                      </span>
-                    </td>
-                  </tr>
+                  {!cargando &&
+                    ultimasTransacciones.map((transacciones) => {
+                      return (
+                        <FilaTabla
+                          key={transacciones.id}
+                          icono={"shopping_cart"}
+                          descripcion={transacciones.descripcion}
+                          categoria={transacciones.conceptos.categorias.nombre}
+                          fecha={transacciones.fecha}
+                          valor={transacciones.valor}
+                          tipo={
+                            transacciones.conceptos.categorias.tipo === "Egreso"
+                              ? "text-error"
+                              : "text-secondary"
+                          }
+                        />
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Fintrack_Logo from "../../assets/images/Fintrack-Logo.png";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,17 +50,15 @@ const SideBar = () => {
         <div className="mb-10 px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                <span className="material-symbols-outlined text-white">
-                  account_balance
-                </span>
+              <div className="w-30 h-15 bg-white rounded-lg flex items-center justify-center">
+                <img src={Fintrack_Logo} alt="" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white tracking-tight font-headline">
                   FinTrack
                 </h1>
                 <p className="text-[10px] text-slate-400 uppercase tracking-widest font-medium">
-                  The Architectural Ledger
+                  Economias y Finanzas Personal
                 </p>
               </div>
             </div>
