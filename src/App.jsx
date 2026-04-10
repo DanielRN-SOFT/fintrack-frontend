@@ -8,6 +8,7 @@ import ConfirmarCuenta from "./pages/ConfirmarCuenta";
 import { AuthProvider } from "./context/AuthProvider";
 import PrivadoLayout from "./layout/PrivadoLayout";
 import Dashboard from "./pages/Dashboard";
+import Transacciones from "./pages/Transacciones";
 function App() {
   return (
     <>
@@ -26,8 +27,9 @@ function App() {
               element={<ConfirmarCuenta />}
             ></Route>
           </Route>
-          <Route path="/dashboard" element={<PrivadoLayout />}>
+          <Route path="/admin" element={<PrivadoLayout />}>
             <Route index element={<Dashboard />}></Route>
+            <Route path="transacciones" element={<Transacciones/>}></Route>
           </Route>
         </Routes>
       </AuthProvider>

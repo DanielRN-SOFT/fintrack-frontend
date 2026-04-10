@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Fintrack_Logo from "../../assets/images/Fintrack-Logo.png";
+import { Link } from "react-router-dom";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,21 +76,21 @@ const SideBar = () => {
         </div>
 
         <nav className="flex-1 space-y-2">
-          <a
+          <Link
             className="flex items-center gap-3 bg-[#f1f3ff]/10 text-white rounded-lg px-4 py-3 border-l-4 border-[#14B86A] transition-all font-medium text-sm tracking-tight"
-            href="#"
+            to="/admin"
           >
             <span className="material-symbols-outlined">dashboard</span>
             Dashboard
-          </a>
+          </Link>
 
-          <a
+          <Link
             className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
-            href="#"
+            to="/admin/transacciones"
           >
             <span className="material-symbols-outlined">receipt_long</span>
             Transacciones
-          </a>
+          </Link>
 
           <a
             className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"

@@ -49,7 +49,7 @@ const Login = () => {
             msg: response.msg,
             error: true,
           });
-      response.token ? navigate("/dashboard") : "";
+      response.token ? navigate("/admin") : "";
     } catch (error) {
       console.log(error);
     }
