@@ -5,7 +5,7 @@ import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
 import Alerta from "../components/alerta";
 import { useState } from "react";
-import clienteFetch from "../../config/clienteFetch";
+import clienteFetch from "../config/clienteFetch";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

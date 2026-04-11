@@ -4,7 +4,7 @@ import HeadingAuth from "../components/Auth/HeadingAuth";
 import ButtonAuth from "../components/Auth/ButtonAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
-import clienteFetch from "../../config/clienteFetch";
+import clienteFetch from "../config/clienteFetch";
 import Alerta from "../components/Alerta";
 import { useState } from "react";
 

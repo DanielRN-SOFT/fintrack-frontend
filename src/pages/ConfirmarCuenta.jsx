@@ -1,11 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import clienteFetch from "../../config/clienteFetch";
+import clienteFetch from "../config/clienteFetch";
 
 const ConfirmarCuenta = () => {
   // Extraer los parametros de la path
   const params = useParams();
-  
+
   // Verificar si se confirmo o no la cuenta
   const [cuentaConfirmada, setCuentaConfirmada] = useState(false);
 
@@ -18,7 +18,6 @@ const ConfirmarCuenta = () => {
   // Extraer el token de los parametros
   const { token } = params;
 
-  
   useEffect(() => {
     // Si la vista ya se renderizo 1 vez, se para la ejecucion del codigo
     if (ejecutado.current) return;

@@ -1,4 +1,4 @@
-import formatearDinero from "../../../config/formatearDinero";
+import formatearDinero from "../../config/formatearDinero";
 
 const FilaTabla = ({ icono, descripcion, categoria, fecha, valor, tipo }) => {
   return (

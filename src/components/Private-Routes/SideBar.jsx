@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Fintrack_Logo from "../../assets/images/Fintrack-Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -77,7 +78,7 @@ const SideBar = () => {
 
         <nav className="flex-1 space-y-2">
           <Link
-            className="flex items-center gap-3 bg-[#f1f3ff]/10 text-white rounded-lg px-4 py-3 border-l-4 border-[#14B86A] transition-all font-medium text-sm tracking-tight"
+            className={`${location.pathname == "/admin" ? "bg-[#f1f3ff]/10 text-white border-[#14B86A] border-l-4 transition-all" : "text-slate-300 hover:text-white transition-color hover:bg-white/5"} flex items-center gap-3 px-4 py-3 font-medium text-sm tracking-tight rounded-lg`}
             to="/admin"
           >
             <span className="material-symbols-outlined">dashboard</span>
@@ -85,7 +86,7 @@ const SideBar = () => {
           </Link>
 
           <Link
-            className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
+            className={`${location.pathname == "/admin/transacciones" ? "bg-[#f1f3ff]/10 text-white border-[#14B86A] border-l-4 transition-all" : "text-slate-300 hover:text-white transition-color hover:bg-white/5"} flex items-center gap-3 px-4 py-3 transition-colors font-medium text-sm tracking-tight rounded-lg`}
             to="/admin/transacciones"
           >
             <span className="material-symbols-outlined">receipt_long</span>

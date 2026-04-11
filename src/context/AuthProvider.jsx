@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from "react";
-import clienteFetch from "../../config/clienteFetch";
-import config from "../../config/authorization";
+import clienteFetch from "../config/clienteFetch";
+import config from "../config/authorization";
 
 const AuthContext = createContext();
 

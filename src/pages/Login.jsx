@@ -8,7 +8,7 @@ import useAuth from "../hooks/useAuth";
 import Alerta from "../components/Alerta";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import clienteFetch from "../../config/clienteFetch";
+import clienteFetch from "../config/clienteFetch";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");

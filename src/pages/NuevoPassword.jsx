@@ -4,7 +4,7 @@ import HeadingAuth from "../components/Auth/HeadingAuth";
 import GroupFormAuth from "../components/Auth/GroupFormAuth";
 import FooterAuth from "../components/Auth/FooterAuth";
 import { useEffect, useState, useRef } from "react";
-import clienteFetch from "../../config/clienteFetch";
+import clienteFetch from "../config/clienteFetch";
 import { useParams } from "react-router-dom";
 import Alerta from "../components/Alerta";
 

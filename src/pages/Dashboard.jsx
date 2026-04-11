@@ -1,8 +1,9 @@
 import CardGrid from "../components/Dashboard/CardGrid";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import clienteFetch from "../../config/clienteFetch";
-import config from "../../config/authorization";
-import formatearDinero from "../../config/formatearDinero";
+import clienteFetch from "../config/clienteFetch";
+import config from "../config/authorization";
+import formatearDinero from "../config/formatearDinero";
 import PieChart from "../components/Charts/PieChart";
 import FinancialChart from "../components/Charts/FinacialChart";
 import BarComparativa from "../components/Charts/BarComparativa";
@@ -137,9 +138,12 @@ const Dashboard = () => {
               <h4 className="font-headline font-bold text-lg text-primary">
                 Últimas Transacciones
               </h4>
-              <button className="text-primary-container text-xs font-bold hover:underline">
+              <Link
+                to={"/admin/transacciones"}
+                className="text-primary-container text-xs font-bold hover:underline cursor-pointer"
+              >
                 Ver todo
-              </button>
+              </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
