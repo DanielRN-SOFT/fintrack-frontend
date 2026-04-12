@@ -19,7 +19,7 @@ const NavBar = () => {
   return (
     // En móvil ocupa el 100%, en desktop resta el sidebar
     <header className="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 flex justify-between items-center px-4 md:px-8 z-40 bg-surface-container-low dark:bg-slate-900">
-      {/* Search: oculto en móvil, visible desde md */}
+      {/* Search: oculto en móvil, visible desde md */} 
       <div className="hidden md:flex items-center flex-1 max-w-xl">
         <div className="relative w-full">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">
