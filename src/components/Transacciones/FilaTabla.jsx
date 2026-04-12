@@ -11,12 +11,6 @@ const FilaTabla = ({
 }) => {
   return (
     <tr className="hover:bg-surface-container-low transition-colors group">
-      <td className="py-4 pl-6">
-        <input
-          className="rounded text-primary focus:ring-primary/20"
-          type="checkbox"
-        />
-      </td>
       <td className="py-4 px-4">
         <div className="font-bold text-primary">{descripcion}</div>
         <div className="text-[10px] text-on-surface-variant font-medium">

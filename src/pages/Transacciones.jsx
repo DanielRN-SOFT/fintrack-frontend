@@ -3,12 +3,16 @@ import clienteFetch from "../config/clienteFetch";
 import config from "../config/authorization";
 import FilaTabla from "../components/Transacciones/FilaTabla";
 import ModalTransaccion from "../components/Transacciones/ModalTransaccion";
+import formatearDinero from "../config/formatearDinero";
+import CardTransaccion from "../components/Transacciones/CardTransaccion";
 
 const Transacciones = () => {
   const [cargando, setCargando] = useState(true);
   const [transacciones, setTransacciones] = useState([]);
   const [animar, setAnimar] = useState(false);
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [resumenAnual, setResumenAnual] = useState({});
+  const token = localStorage.getItem("token");
 
   const abrirModal = () => {
     setMostrarModal(true);
@@ -24,16 +28,32 @@ const Transacciones = () => {
     }, 300);
   };
 
-   const obtenerTransacciones = async () => {
-     const token = localStorage.getItem("token");
-     const request = await clienteFetch("/transacciones", config(token));
-     const response = await request.json();
-     setTransacciones(response);
-     setCargando(false);
-   };
+  const obtenerTransacciones = async () => {
+    try {
+      const request = await clienteFetch("/transacciones", config(token));
+      const response = await request.json();
+      setTransacciones(response);
+      setCargando(false);
+    } catch (error) {
+      console.log(error);
+    }
+
+    obtenerTransacciones();
+  };
+
+  const obtenerEstadisticas = async () => {
+    try {
+      const request = await clienteFetch("/dashboard", config(token));
+      const response = await request.json();
+      setResumenAnual(response.resumenAnual);
+    } catch (error) {
+      console.log(error);
+    }
+    obtenerEstadisticas();
+  };
 
   useEffect(() => {
-    obtenerTransacciones();
+    Promise.all([obtenerTransacciones(), obtenerEstadisticas()]);
   }, []);
 
   useEffect(() => {
@@ -44,7 +64,11 @@ const Transacciones = () => {
       <main className="mt-16 p-4 md:p-6 lg:p-8 min-h-screen bg-surface lg:ml-64">
         {/* Modal de transaccion */}
         {mostrarModal && (
-          <ModalTransaccion recargar={obtenerTransacciones} cerrar={cerrarModal} animar={animar} />
+          <ModalTransaccion
+            recargar={obtenerTransacciones}
+            cerrar={cerrarModal}
+            animar={animar}
+          />
         )}
         {/* <!-- Header Section --> */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
@@ -166,7 +190,7 @@ const Transacciones = () => {
                 Total Ingresos
               </p>
               <p className="text-2xl font-headline font-extrabold text-primary">
-                $12,400,000
+                {formatearDinero(resumenAnual.ingresos)}
               </p>
             </div>
             <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
@@ -181,7 +205,7 @@ const Transacciones = () => {
                 Total Egresos
               </p>
               <p className="text-2xl font-headline font-extrabold text-primary">
-                $7,890,000
+                {formatearDinero(resumenAnual.egresos)}
               </p>
             </div>
             <div className="w-12 h-12 rounded-full bg-error/20 flex items-center justify-center">
@@ -196,7 +220,7 @@ const Transacciones = () => {
                 Balance
               </p>
               <p className="text-2xl font-headline font-extrabold text-primary">
-                $4,510,000
+                {formatearDinero(resumenAnual.balance)}
               </p>
             </div>
             <div className="w-12 h-12 rounded-full bg-tertiary/20 flex items-center justify-center">
@@ -206,17 +230,29 @@ const Transacciones = () => {
             </div>
           </div>
         </div>
-        {/* <!-- Transactions Table --> */}
-        <div className="overflow-x-auto">
+
+        {/* Vista móvil tipo cards */}
+        <div className="md:hidden space-y-4">
+          {!cargando &&
+            transacciones.map((transaccion) => (
+              <CardTransaccion
+                key={transaccion.id}
+                descripcion={transaccion.descripcion}
+                concepto={transaccion.conceptos.nombre}
+                categoria={transaccion.conceptos.categorias.nombre}
+                tipo={transaccion.conceptos.categorias.tipo}
+                valor={transaccion.valor}
+                fecha={new Date(transaccion.fecha).toLocaleString()}
+                cuenta={transaccion.cuentas.nombre}
+              />
+            ))}
+        </div>
+
+        {/* <!-- Transactions Table en DeskTop--> */}
+        <div className="overflow-x-auto hidden md:block">
           <table className="min-w-200 w-full text-left border-collapse">
             <thead className="bg-surface-container-low border-b border-outline-variant/20">
               <tr>
-                <th className="py-4 pl-6 w-12">
-                  <input
-                    className="rounded text-primary focus:ring-primary/20"
-                    type="checkbox"
-                  />
-                </th>
                 <th className="py-4 px-4 text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                   Descripción
                 </th>
