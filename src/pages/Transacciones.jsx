@@ -24,15 +24,15 @@ const Transacciones = () => {
     }, 300);
   };
 
-  useEffect(() => {
-    const obtenerTransacciones = async () => {
-      const token = localStorage.getItem("token");
-      const request = await clienteFetch("/transacciones", config(token));
-      const response = await request.json();
-      setTransacciones(response);
-      setCargando(false);
-    };
+   const obtenerTransacciones = async () => {
+     const token = localStorage.getItem("token");
+     const request = await clienteFetch("/transacciones", config(token));
+     const response = await request.json();
+     setTransacciones(response);
+     setCargando(false);
+   };
 
+  useEffect(() => {
     obtenerTransacciones();
   }, []);
 
@@ -44,7 +44,7 @@ const Transacciones = () => {
       <main className="mt-16 p-4 md:p-6 lg:p-8 min-h-screen bg-surface lg:ml-64">
         {/* Modal de transaccion */}
         {mostrarModal && (
-          <ModalTransaccion cerrar={cerrarModal} animar={animar} />
+          <ModalTransaccion recargar={obtenerTransacciones} cerrar={cerrarModal} animar={animar} />
         )}
         {/* <!-- Header Section --> */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
