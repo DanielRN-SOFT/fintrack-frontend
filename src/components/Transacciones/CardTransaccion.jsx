@@ -1,4 +1,3 @@
-
 const CardTransaccion = ({
   descripcion,
   concepto,
@@ -7,6 +6,7 @@ const CardTransaccion = ({
   valor,
   fecha,
   cuenta,
+  fnEliminar,
 }) => {
   return (
     <div className="bg-surface-container-lowest rounded-xl p-4 shadow-sm border border-outline-variant/10 space-y-3">
@@ -60,7 +60,12 @@ const CardTransaccion = ({
         <button className="p-2 rounded-lg hover:bg-surface">
           <span className="material-symbols-outlined text-[18px]">edit</span>
         </button>
-        <button className="p-2 rounded-lg hover:bg-surface text-error">
+        <button
+          onClick={() => {
+            fnEliminar();
+          }}
+          className="p-2 rounded-lg hover:bg-surface text-error cursor-pointer"
+        >
           <span className="material-symbols-outlined text-[18px]">delete</span>
         </button>
       </div>

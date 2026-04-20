@@ -5,21 +5,19 @@ import FilaTabla from "../components/Transacciones/FilaTabla";
 import ModalTransaccion from "../components/Transacciones/ModalTransaccion";
 import formatearDinero from "../config/formatearDinero";
 import CardTransaccion from "../components/Transacciones/CardTransaccion";
+import ModalEliminar from "../components/Transacciones/ModalEliminar";
+import obtenerTransacciones from "../helpers/obtenerTransacciones";
+import obtenerEstadisticas from "../helpers/obtenerEstadisticas";
 
 const Transacciones = () => {
   const [cargando, setCargando] = useState(true);
-  const [transacciones, setTransacciones] = useState([]);
+  const [itemSeleccionado, setItemSeleccionado] = useState(null);
   const [animar, setAnimar] = useState(false);
+  const [mostrarEliminar, setMostrarEliminar] = useState(false);
+  const [transacciones, setTransacciones] = useState([]);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [resumenAnual, setResumenAnual] = useState({});
   const token = localStorage.getItem("token");
-
-  const abrirModal = () => {
-    setMostrarModal(true);
-    setTimeout(() => {
-      setAnimar(true);
-    }, 10);
-  };
 
   const cerrarModal = () => {
     setAnimar(false);
@@ -28,45 +26,59 @@ const Transacciones = () => {
     }, 300);
   };
 
-  const obtenerTransacciones = async () => {
-    try {
-      const request = await clienteFetch("/transacciones", config(token));
-      const response = await request.json();
-      setTransacciones(response);
-      setCargando(false);
-    } catch (error) {
-      console.log(error);
-    }
-
-    obtenerTransacciones();
-  };
-
-  const obtenerEstadisticas = async () => {
-    try {
-      const request = await clienteFetch("/dashboard", config(token));
-      const response = await request.json();
-      setResumenAnual(response.resumenAnual);
-    } catch (error) {
-      console.log(error);
-    }
-    obtenerEstadisticas();
+  const cerrarEliminar = () => {
+    setAnimar(false);
+    setTimeout(() => {
+      setMostrarEliminar(false);
+    }, 300);
   };
 
   useEffect(() => {
-    Promise.all([obtenerTransacciones(), obtenerEstadisticas()]);
+    ejectutarTransacciones();
+  }, []);
+
+  const ejectutarTransacciones = async () => {
+    const response = await obtenerTransacciones(setTransacciones);
+    setCargando(false);
+  };
+
+  const ejecutarEstadisticas = async () => {
+    const response = await obtenerEstadisticas(setResumenAnual);
+    setCargando(false);
+  };
+
+  useEffect(() => {
+    ejecutarEstadisticas();
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mostrarModal ? "hidden" : "auto";
-  }, [mostrarModal]);
+    if (mostrarModal || mostrarEliminar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [mostrarModal, mostrarEliminar]);
+
   return (
     <>
       <main className="mt-16 p-4 md:p-6 lg:p-8 min-h-screen bg-surface lg:ml-64">
         {/* Modal de transaccion */}
         {mostrarModal && (
           <ModalTransaccion
-            recargar={obtenerTransacciones}
+            recargarTransacciones={ejectutarTransacciones}
+            recargarEstadisticas={ejecutarEstadisticas}
             cerrar={cerrarModal}
+            animar={animar}
+          />
+        )}
+
+        {/* Modal de eliminar transaccion */}
+        {mostrarEliminar && (
+          <ModalEliminar
+            recargarTransacciones={ejectutarTransacciones}
+            recargarEstadisticas={ejecutarEstadisticas}
+            data={itemSeleccionado}
+            cerrar={cerrarEliminar}
             animar={animar}
           />
         )}
@@ -88,7 +100,12 @@ const Transacciones = () => {
               Exportar CSV
             </button>
             <button
-              onClick={(e) => abrirModal()}
+              onClick={(e) => {
+                setMostrarModal(true);
+                setTimeout(() => {
+                  setAnimar(true);
+                }, 10);
+              }}
               className="px-5 py-2.5 bg-secondary text-white font-bold rounded-lg flex items-center gap-2 shadow-lg shadow-secondary/20 hover:scale-[0.98] transition-all cursor-pointer"
             >
               <span className="material-symbols-outlined text-xl">add</span>
@@ -190,7 +207,7 @@ const Transacciones = () => {
                 Total Ingresos
               </p>
               <p className="text-2xl font-headline font-extrabold text-primary">
-                {formatearDinero(resumenAnual.ingresos)}
+                {!cargando && formatearDinero(resumenAnual.ingresos)}
               </p>
             </div>
             <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
@@ -205,7 +222,7 @@ const Transacciones = () => {
                 Total Egresos
               </p>
               <p className="text-2xl font-headline font-extrabold text-primary">
-                {formatearDinero(resumenAnual.egresos)}
+                {!cargando && formatearDinero(resumenAnual.egresos)}
               </p>
             </div>
             <div className="w-12 h-12 rounded-full bg-error/20 flex items-center justify-center">
@@ -289,6 +306,13 @@ const Transacciones = () => {
                       valor={transaccion.valor}
                       fecha={transaccion.fecha}
                       cuenta={transaccion.cuentas.nombre}
+                      onEliminar={() => {
+                        setItemSeleccionado(transaccion);
+                        setMostrarEliminar(true);
+                        setTimeout(() => {
+                          setAnimar(true);
+                        }, 10);
+                      }}
                     />
                   );
                 })}

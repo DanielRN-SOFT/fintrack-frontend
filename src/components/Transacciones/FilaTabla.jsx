@@ -1,3 +1,4 @@
+import { useState } from "react";
 import formatearDinero from "../../config/formatearDinero";
 
 const FilaTabla = ({
@@ -8,6 +9,7 @@ const FilaTabla = ({
   cuenta,
   tipo,
   valor,
+  onEliminar,
 }) => {
   return (
     <tr className="hover:bg-surface-container-low transition-colors group">
@@ -39,7 +41,8 @@ const FilaTabla = ({
         <div
           className={`${tipo === "Ingreso" ? "text-secondary" : "text-error"} font-bold text-base`}
         >
-          {tipo === "Ingreso" ? "+" : "-"}{formatearDinero(valor)}
+          {tipo === "Ingreso" ? "+" : "-"}
+          {formatearDinero(valor)}
         </div>
       </td>
       <td className="py-4 pr-6 text-right">
@@ -47,7 +50,12 @@ const FilaTabla = ({
           <button className="hover:text-primary">
             <span className="material-symbols-outlined text-lg">edit</span>
           </button>
-          <button className="hover:text-error">
+          <button
+            onClick={() => {
+              onEliminar();
+            }}
+            className="hover:text-error cursor-pointer"
+          >
             <span className="material-symbols-outlined text-lg">delete</span>
           </button>
         </div>

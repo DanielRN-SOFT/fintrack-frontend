@@ -3,7 +3,13 @@ import clienteFetch from "../../config/clienteFetch";
 import config from "../../config/authorization";
 import Alerta from "../Alerta";
 
-const ModalTransaccion = ({ cerrar, animar, recargar }) => {
+const ModalTransaccion = ({
+  cerrar,
+  animar,
+  recargarTransacciones,
+  recargarEstadisticas,
+  data = {},
+}) => {
   // Cargar las opciones de los select HTML
   const [conceptosSelect, setConceptosSelect] = useState([]);
   const [cuentasSelect, setCuentasSelect] = useState([]);
@@ -95,7 +101,8 @@ const ModalTransaccion = ({ cerrar, animar, recargar }) => {
       );
 
       setTimeout(() => {
-        recargar();
+        recargarTransacciones();
+        recargarEstadisticas();
         cerrar();
       }, 2000);
     } catch (error) {
@@ -171,7 +178,7 @@ const ModalTransaccion = ({ cerrar, animar, recargar }) => {
                 className="w-full h-12 px-4 bg-surface-container-lowest border-2 border-gray-50 ring-1 ring-outline-variant/30 rounded-lg focus:ring-2 focus:ring-on-tertiary-container/20 focus:border-on-tertiary-container outline-none transition-all placeholder:text-outline/50"
                 placeholder="Ej: Pago de nómina"
                 type="text"
-                value={descripcion}
+                value={data.descripcion}
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
@@ -190,7 +197,7 @@ const ModalTransaccion = ({ cerrar, animar, recargar }) => {
                   className="w-full h-16 pl-10 pr-4 bg-surface-container-lowest border-2 border-gray-50 ring-1 ring-outline-variant/30 rounded-lg focus:ring-2 focus:ring-on-tertiary-container/20 focus:border-on-tertiary-container outline-none transition-all text-2xl font-headline font-bold text-primary placeholder:text-outline-variant"
                   placeholder="0"
                   type="number"
-                  value={valor}
+                  value={data.valor}
                   onChange={(e) => {
                     setValor(parseInt(e.target.value));
                   }}
@@ -217,7 +224,11 @@ const ModalTransaccion = ({ cerrar, animar, recargar }) => {
 
                     {cuentasSelect.map((cuenta) => {
                       return (
-                        <option key={cuenta.id} value={cuenta.id}>
+                        <option
+                          {...(data?.cuenta.id === cuenta.id ? "selected" : "")}
+                          key={cuenta.id}
+                          value={cuenta.id}
+                        >
                           {cuenta.nombre}
                         </option>
                       );
@@ -235,7 +246,7 @@ const ModalTransaccion = ({ cerrar, animar, recargar }) => {
                 <input
                   className="w-full h-12 pl-4 pr-10 bg-surface-container-lowest border-2 border-gray-50 ring-1 ring-outline-variant/30 rounded-lg focus:ring-2 focus:ring-on-tertiary-container/20 appearance-none outline-none cursor-pointer focus:border-on-tertiary-container"
                   type="date"
-                  value={fecha}
+                  value={data.fecha}
                   onChange={(e) => {
                     setFecha(e.target.value);
                   }}
@@ -264,6 +275,9 @@ const ModalTransaccion = ({ cerrar, animar, recargar }) => {
                   {conceptosSelect.map((concepto) => {
                     return (
                       <option
+                        {...(data.concepto.id === concepto.id
+                          ? "selected"
+                          : "")}
                         data-tipo={concepto.categorias.tipo}
                         key={concepto.id}
                         value={concepto.id}
