@@ -122,7 +122,7 @@ const Registrar = () => {
             url={"/"}
           />
           <ButtonAuth
-            className="transition-all bg-[#14B86A] text-white shadow-sm"
+            className="transition-all bg-on-tertiary-fixed-variant text-white shadow-sm"
             mensaje={"Registrarse"}
             url={"/sign-up"}
           />
@@ -220,7 +220,7 @@ const Registrar = () => {
           {msg && <Alerta alerta={alerta} onClose={() => setAlerta({})} />}
 
           <button
-            className="w-full py-3 px-6 cursor-pointer bg-[#14B86A] text-white rounded-lg font-bold text-lg hover:bg-[#14B86A]/90 transition-all transform hover:scale-[1.01] active:scale-[0.98] shadow-lg shadow-[#14B86A]/20"
+            className="w-full py-3 px-6 cursor-pointer bg-on-tertiary-fixed-variant text-white rounded-lg font-bold text-lg hover:bg-on-tertiary-fixed-variant/90 transition-all transform hover:scale-[1.01] active:scale-[0.98] shadow-lg shadow-[#14B86A]/20"
             type="submit"
           >
             Crear cuenta

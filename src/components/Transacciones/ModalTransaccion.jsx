@@ -178,7 +178,7 @@ const ModalTransaccion = ({
                 className="w-full h-12 px-4 bg-surface-container-lowest border-2 border-gray-50 ring-1 ring-outline-variant/30 rounded-lg focus:ring-2 focus:ring-on-tertiary-container/20 focus:border-on-tertiary-container outline-none transition-all placeholder:text-outline/50"
                 placeholder="Ej: Pago de nómina"
                 type="text"
-                value={data.descripcion}
+                // value={data.descripcion}
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
@@ -197,7 +197,7 @@ const ModalTransaccion = ({
                   className="w-full h-16 pl-10 pr-4 bg-surface-container-lowest border-2 border-gray-50 ring-1 ring-outline-variant/30 rounded-lg focus:ring-2 focus:ring-on-tertiary-container/20 focus:border-on-tertiary-container outline-none transition-all text-2xl font-headline font-bold text-primary placeholder:text-outline-variant"
                   placeholder="0"
                   type="number"
-                  value={data.valor}
+                  // value={data.valor}
                   onChange={(e) => {
                     setValor(parseInt(e.target.value));
                   }}
@@ -225,7 +225,7 @@ const ModalTransaccion = ({
                     {cuentasSelect.map((cuenta) => {
                       return (
                         <option
-                          {...(data?.cuenta.id === cuenta.id ? "selected" : "")}
+                          // {...(data?.cuenta.id === cuenta.id ? "selected" : "")}
                           key={cuenta.id}
                           value={cuenta.id}
                         >
@@ -246,7 +246,7 @@ const ModalTransaccion = ({
                 <input
                   className="w-full h-12 pl-4 pr-10 bg-surface-container-lowest border-2 border-gray-50 ring-1 ring-outline-variant/30 rounded-lg focus:ring-2 focus:ring-on-tertiary-container/20 appearance-none outline-none cursor-pointer focus:border-on-tertiary-container"
                   type="date"
-                  value={data.fecha}
+                  // value={data.fecha}
                   onChange={(e) => {
                     setFecha(e.target.value);
                   }}
@@ -275,9 +275,9 @@ const ModalTransaccion = ({
                   {conceptosSelect.map((concepto) => {
                     return (
                       <option
-                        {...(data.concepto.id === concepto.id
-                          ? "selected"
-                          : "")}
+                        // {...(data.concepto.id === concepto.id
+                        //   ? "selected"
+                        //   : "")}
                         data-tipo={concepto.categorias.tipo}
                         key={concepto.id}
                         value={concepto.id}

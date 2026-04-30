@@ -44,19 +44,19 @@ const SideBar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-full w-65 bg-[#002D5E] dark:bg-[#001939] flex flex-col py-6 px-4 z-50 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed left-0 top-0 h-full w-65 bg-[#f3f4f5] dark:bg-[#001939] flex flex-col py-6 px-4 z-50 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Header con logo y botón cerrar */}
         <div className="mb-10 px-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-30 h-15 bg-white rounded-lg flex items-center justify-center">
+            <div className="flex items-center gap-3 flex-col">
+              <div className="w-30 h-15 flex items-center justify-center">
                 <img src={Fintrack_Logo} alt="" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white tracking-tight font-headline">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-primary tracking-tight font-headline">
                   FinTrack
                 </h1>
                 <p className="text-[10px] text-slate-400 uppercase tracking-widest font-medium">
@@ -68,7 +68,7 @@ const SideBar = () => {
             {/* Botón cerrar — solo visible en móvil/tablet dentro del sidebar */}
             <button
               onClick={() => setIsOpen(false)}
-              className="lg:hidden w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+              className="lg:hidden w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-primary transition-colors cursor-pointer"
               aria-label="Cerrar menú"
             >
               <span className="material-symbols-outlined text-lg">close</span>
@@ -78,7 +78,7 @@ const SideBar = () => {
 
         <nav className="flex-1 space-y-2">
           <Link
-            className={`${location.pathname == "/admin" ? "bg-[#f1f3ff]/10 text-white border-[#14B86A] border-l-4 transition-all" : "text-slate-300 hover:text-white transition-color hover:bg-white/5"} flex items-center gap-3 px-4 py-3 font-medium text-sm tracking-tight rounded-lg`}
+            className={`${location.pathname == "/admin" ? "bg-white dark:bg-[#002d5e] text-[#002D5E] dark:text-[#14B86A] rounded-lg shadow-sm font-bold" : "text-slate-600 dark:text-slate-400 hover:bg-white/50"} flex items-center gap-3 px-4 py-3 font-medium text-sm tracking-tight rounded-lg transition-all`}
             to="/admin"
           >
             <span className="material-symbols-outlined">dashboard</span>
@@ -86,7 +86,7 @@ const SideBar = () => {
           </Link>
 
           <Link
-            className={`${location.pathname == "/admin/transacciones" ? "bg-[#f1f3ff]/10 text-white border-[#14B86A] border-l-4 transition-all" : "text-slate-300 hover:text-white transition-color hover:bg-white/5"} flex items-center gap-3 px-4 py-3 transition-colors font-medium text-sm tracking-tight rounded-lg`}
+            className={`${location.pathname == "/admin/transacciones" ? "bg-white dark:bg-[#002d5e] text-[#002D5E] dark:text-[#14B86A] rounded-lg shadow-sm font-bold" : "text-slate-600 dark:text-slate-400 hover:bg-white/50"} flex items-center gap-3 px-4 py-3 font-medium text-sm tracking-tight rounded-lg transition-all`}
             to="/admin/transacciones"
           >
             <span className="material-symbols-outlined">receipt_long</span>
@@ -94,7 +94,7 @@ const SideBar = () => {
           </Link>
 
           <a
-            className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
+            className={`${location.pathname == "/admin/reportes" ? "bg-white dark:bg-[#002d5e] text-[#002D5E] dark:text-[#14B86A] rounded-lg shadow-sm font-bold" : "text-slate-600 dark:text-slate-400 hover:bg-white/50"} flex items-center gap-3 px-4 py-3 font-medium text-sm tracking-tight rounded-lg transition-all`}
             href="#"
           >
             <span className="material-symbols-outlined">bar_chart</span>
@@ -102,7 +102,7 @@ const SideBar = () => {
           </a>
 
           <a
-            className="flex items-center gap-3 text-slate-300 px-4 py-3 hover:text-white transition-colors font-medium text-sm tracking-tight hover:bg-white/5 rounded-lg"
+            className={`${location.pathname == "/admin/configuracion" ? "bg-white dark:bg-[#002d5e] text-[#002D5E] dark:text-[#14B86A] rounded-lg shadow-sm font-bold" : "text-slate-600 dark:text-slate-400 hover:bg-white/50"} flex items-center gap-3 px-4 py-3 font-medium text-sm tracking-tight rounded-lg transition-all`}
             href="#"
           >
             <span className="material-symbols-outlined">settings</span>

@@ -69,7 +69,7 @@ const Login = () => {
         {/* <!-- Form Toggle --> */}
         <div className="inline-flex p-1 bg-surface-container-low rounded-xl mb-8 w-full">
           <ButtonAuth
-            className="transition-all bg-[#14B86A] text-white shadow-sm"
+            className="transition-all bg-on-tertiary-fixed-variant text-white shadow-sm"
             mensaje={"Iniciar sesión"}
             url={"/"}
           />
@@ -99,7 +99,7 @@ const Login = () => {
             <div className="flex items-center justify-between mb-2">
               <LabelAuth contenido={"Contraseña"} id={"password"} />
               <Link
-                className="text-xs font-semibold text-on-tertiary-container hover:underline"
+                className="text-xs font-semibold text-on-tertiary-fixed-variant hover:underline"
                 to="/forgot-password"
               >
                 ¿Olvidaste tu contraseña?
@@ -136,7 +136,7 @@ const Login = () => {
 
           {msg && <Alerta alerta={alerta} />}
           <button
-            className="w-full py-4 px-6 cursor-pointer bg-[#14B86A] text-white rounded-lg font-bold text-lg hover:bg-[#14B86A]/90 transition-all transform hover:scale-[1.01] active:scale-[0.98] shadow-lg shadow-[#14B86A]/20"
+            className="w-full py-4 px-6 cursor-pointer bg-on-tertiary-fixed-variant text-white rounded-lg font-bold text-lg hover:bg-on-tertiary-fixed-variant/90 transition-all transform hover:scale-[1.01] active:scale-[0.98] shadow-lg shadow-[#14B86A]/20"
             type="submit"
           >
             Iniciar sesión

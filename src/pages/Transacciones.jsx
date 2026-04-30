@@ -69,6 +69,7 @@ const Transacciones = () => {
             recargarEstadisticas={ejecutarEstadisticas}
             cerrar={cerrarModal}
             animar={animar}
+        
           />
         )}
 

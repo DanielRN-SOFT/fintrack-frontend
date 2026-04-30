@@ -18,15 +18,15 @@ const NavBar = () => {
 
   return (
     // En móvil ocupa el 100%, en desktop resta el sidebar
-    <header className="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 flex justify-between items-center px-4 md:px-8 z-40 bg-surface-container-low dark:bg-slate-900">
-      {/* Search: oculto en móvil, visible desde md */} 
+    <header className="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 flex justify-between items-center px-4 md:px-8 py-4 z-40 shadow bg-white/80 dark:bg-[#001939]/80 backdrop-blur-md">
+      {/* Search: oculto en móvil, visible desde md */}
       <div className="hidden md:flex items-center flex-1 max-w-xl">
         <div className="relative w-full">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">
             search
           </span>
           <input
-            className="w-full bg-surface-container-lowest border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-surface-tint focus:outline-none transition-all duration-200"
+            className="w-full bg-surface-container-highest border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-surface-tint focus:outline-none transition-all duration-200"
             placeholder="Buscar transacciones..."
             type="text"
           />
@@ -70,12 +70,13 @@ const NavBar = () => {
 
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            className="focus:outline-none rounded-full transition-all duration-200 hover:ring-2 hover:ring-primary/30"
+            className="focus:outline-none rounded-full transition-all duration-200 hover:ring-2 hover:ring-primary/30 cursor-pointer"
           >
             <img
-              alt="Avatar del usuario"
-              className="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-surface-container-highest cursor-pointer"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4LAuo6KnH-cnC4khPiFYHhMqc9NJqbafPsmx2M9eYYDq5zWP_9ACjXXR_R7WEVeFs0cSyQqh4k6tfqDMRqdzh5_5ztguI8A3V-kK-MqgJeMjLfggedX_s3C2QXlSZhPP0soMj6sONvglibc97wKNRD2t6Vox0ECaRHcUO6hl8z5XTWLBURtbkPqfH4ow_GGR5BvEpGp8l-77vd8atcvAOu1e4Ce8PMaa8OHlTWle-xh_-9GqDF0qofbIJ1ys4x6A9TXuwiL7_KVOq"
+              alt="User profile"
+              class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-fixed"
+              data-alt="portrait of a professional man in a tailored suit, soft studio lighting, clean background, editorial photography style"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDGP2cgMXMF5rOnSeWRWvCSl6BVmBIroYE_b-l1RNzXmd_7L9wjECzx46fVWpBNhCAOEm5O-I4R1XiOwyXgoutCDAQT22Ca0vcGLdQIJIrApclbLs5AJAbwyNpk9P7C-Zdl0pt8DCrF43qg3DlYX0wRVP6r3pxA5H2duD71K0sggIfVfIvayITBMVU1mFUqCLmdhkxIxo-pDbDaesrSVVU4OHC4FZRcX_jZmubZwNDoAbfRcy9Ozh_7bM56GJbVbfx9gAMYe3IDV3Y"
             />
           </button>
 
